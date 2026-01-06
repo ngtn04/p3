@@ -63,7 +63,7 @@ pipeline {
                 sh "docker stop ${IMAGE_NAME} || true"
                 sh "docker rm ${IMAGE_NAME} || true"
                 // Run the new container
-                sh "docker run -d --name ${IMAGE_NAME} -p 8080:8080 ${REGISTRY}:latest"
+                sh "docker run -d --name ${IMAGE_NAME} -p 9090:8080 ${REGISTRY}:latest"
             }
         }
 
