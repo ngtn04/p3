@@ -43,10 +43,19 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                // sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
-                sh "docker push ${REGISTRY}:latest"
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-cre',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                        docker push ${REGISTRY}:latest
+                    '''
+                }
             }
         }
+
 
         stage('Deploy') {
             steps {
