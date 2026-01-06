@@ -11,6 +11,8 @@ pipeline {
         DOCKER_HUB_USER = "selfcreated"
         IMAGE_NAME = "java-hello-world"
         REGISTRY = "${DOCKER_HUB_USER}/${IMAGE_NAME}"
+        DOCKER_HUB_CREDS_USR = credentials('dockerhub-cre')
+        
     }
 
     stages {
