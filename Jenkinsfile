@@ -12,6 +12,8 @@ pipeline {
         IMAGE_NAME = "java-hello-world"
         REGISTRY = "${DOCKER_HUB_USER}/${IMAGE_NAME}"
         DOCKER_HUB_CRE = credentials('dockerhub-cre')
+        DOCKER_HUB_CRE_USR = DOCKER_HUB_CRE.username
+        DOCKER_HUB_CRE_PSW = DOCKER_HUB_CRE.password
         
     }
 
@@ -43,7 +45,7 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                sh "echo ${DOCKER_HUB_CRE} | docker login -u ${DOCKER_HUB_CREDS_USR} --password-stdin"
+                sh "echo ${DOCKER_HUB_CRE_PSW} | docker login -u ${DOCKER_HUB_CRE_USR} --password-stdin"
                 sh "docker push ${REGISTRY}:${BUILD_NUMBER}"
                 sh "docker push ${REGISTRY}:latest"
             }
